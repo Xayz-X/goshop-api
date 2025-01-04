@@ -32,16 +32,16 @@ goshop-api/
 ## Roues Structure:
 
 ```
-Route	            Method	Description	                Access
+Route	              Method	 Description	                Access
 ----------------------------------------------------------------------
-/api/register	    POST	Register a new user	        Public
-/api/login	        POST	Log in and get JWT	        Public
-/api/products	    GET	    Get all products	        Public
-/api/products	    POST	Add a new product	        Admin Only
-/api/products/{id}	DELETE	Delete a product	        Admin Only
-/api/cart	        POST	Add a product to the cart	Authenticated
-/api/cart	        GET	    View items in the cart	    Authenticated
-/api/orders	        POST	Place an order	            Authenticated
+/api/register	     POST	 Register a new user	          Public
+/api/login	        POST	 Log in and get JWT	          Public
+/api/products	     GET	    Get all products	             Public
+/api/products	     POST	 Add a new product	          Admin Only
+/api/products/{id}  DELETE	 Delete a product	             Admin Only
+/api/cart	        POST	 Add a product to the cart	    Authenticated
+/api/cart	        GET	    View items in the cart	       Authenticated
+/api/orders	        POST	 Place an order	             Authenticated
 /api/orders	        GET	    View user order history	    Authenticated
 ```
 
