@@ -8,6 +8,8 @@ import (
 )
 
 func main() {
+
+	// run the server on port -> 3030
 	server := services.NewAPIService(":3030")
 	router := routes.GetRoutes()
 	err := server.Run(router)
