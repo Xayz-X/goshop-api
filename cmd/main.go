@@ -15,13 +15,13 @@ func main() {
 	client, database := services.ConnectToDb()
 	defer client.Disconnect(context.Background())
 
-	// create user collection
+	// create
 	userCol := database.Collection("user")
 	controllers.NewUserCollection(userCol)
 
 	// run the server on port -> 3030
 	server := services.NewAPIService(":3030")
-	router := routes.GetRoutes()
+	router := routes.GetRoutes(database)
 	err := server.Run(router)
 	if err != nil {
 		log.Fatal("server start failed", err)

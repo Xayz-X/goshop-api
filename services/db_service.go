@@ -9,6 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type MongoCollections struct {
+	UserCol *mongo.Collection
+}
+
 func ConnectToDb() (*mongo.Client, *mongo.Database) {
 	config.LoadEnv()
 	mongoURI := config.GetEnv("MONGO_URI")
@@ -18,6 +22,7 @@ func ConnectToDb() (*mongo.Client, *mongo.Database) {
 	if err != nil {
 		log.Fatal("mongo client error", err)
 	}
+
 	database := client.Database(databaseName)
 	return client, database
 }
