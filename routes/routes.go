@@ -8,7 +8,7 @@ import (
 
 func GetRoutes() *http.ServeMux {
 	router := http.NewServeMux()
-	router.HandleFunc("/", healthCheck)
+	router.HandleFunc("GET /", healthCheck)
 	router.HandleFunc("POST /user/register", controllers.UserRegisterHandler)
 	return router
 }
