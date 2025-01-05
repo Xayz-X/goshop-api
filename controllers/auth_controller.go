@@ -9,6 +9,7 @@ import (
 
 	"github.com/Xayz-X/goshop-api/models"
 	"github.com/Xayz-X/goshop-api/utils"
+	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -16,6 +17,8 @@ import (
 type UserCollection struct {
 	UserCol *mongo.Collection
 }
+
+var validate = validator.New()
 
 func NewUserCollection(userCol *mongo.Collection) *UserCollection {
 	return &UserCollection{
@@ -121,7 +124,11 @@ func (u *UserCollection) UserRegisterHandler(w http.ResponseWriter, r *http.Requ
 		utils.WriterError(w, http.StatusBadRequest, err)
 		return
 	}
-
+	vErrs := validate.Struct(userPayload)
+	if vErrs != nil {
+		utils.WriteValidationError(w, http.StatusConflict, vErrs)
+		return
+	}
 	// check if any user exist with same email
 
 	user, _ := u.GetUserByEmail(userPayload.Email)
