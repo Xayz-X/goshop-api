@@ -99,7 +99,7 @@ func (u *UserCollection) DeleteUserHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	// well if user not deleted it become still sucess we have to check if any suer dleeted or not
-	utils.WriterJSON(w, http.StatusCreated, map[string]bool{"success": true})
+	utils.WriterJSON(w, http.StatusGone, map[string]bool{"success": true})
 }
 
 func (u *UserCollection) GetAllUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -109,7 +109,7 @@ func (u *UserCollection) GetAllUserHandler(w http.ResponseWriter, r *http.Reques
 		utils.WriterError(w, http.StatusInternalServerError, err)
 		return
 	}
-	utils.WriterJSON(w, http.StatusCreated, &userList)
+	utils.WriterJSON(w, http.StatusFound, &userList)
 }
 
 func (u *UserCollection) UserRegisterHandler(w http.ResponseWriter, r *http.Request) {
