@@ -14,7 +14,7 @@ func (s *APIService) Run(router *http.ServeMux) error {
 		Addr:    s.addr,
 		Handler: router,
 	}
-	log.Printf("server has started %s", s.addr)
+	log.Println("server has started", s.addr)
 	return server.ListenAndServe()
 
 }

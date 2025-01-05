@@ -68,7 +68,42 @@ func (u *UserCollection) CreateNewUser(payload models.UserRegisterPayload) (*mon
 	return result, nil
 }
 
-func (u *UserCollection) ListAllUser(w http.ResponseWriter, r *http.Request) {
+func (u *UserCollection) DeleteUserByEmail(email string) (*mongo.DeleteResult, error) {
+	result, err := u.UserCol.DeleteOne(context.Background(), bson.D{{Key: "email", Value: email}})
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (u *UserCollection) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+
+	var requestBody struct {
+		Email string `json:"email"`
+	}
+
+	// Decode the request body into the struct
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil || requestBody.Email == "" {
+		log.Println("Error deleting user by email:", err)
+		utils.WriterError(w, http.StatusBadRequest, errors.New("invalid email"))
+		return
+	}
+	result, err := u.DeleteUserByEmail(requestBody.Email)
+	if err != nil {
+		utils.WriterError(w, http.StatusInternalServerError, err)
+		return
+	}
+	if result.DeletedCount == 0 {
+		log.Println("No user found with email: ", requestBody.Email)
+		utils.WriterError(w, http.StatusNotFound, errors.New("user not found"))
+		return
+	}
+	// well if user not deleted it become still sucess we have to check if any suer dleeted or not
+	utils.WriterJSON(w, http.StatusCreated, map[string]bool{"success": true})
+}
+
+func (u *UserCollection) GetAllUserHandler(w http.ResponseWriter, r *http.Request) {
+
 	userList, err := u.GetAllUsers()
 	if err != nil {
 		utils.WriterError(w, http.StatusInternalServerError, err)

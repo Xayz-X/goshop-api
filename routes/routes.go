@@ -12,9 +12,13 @@ func GetRoutes(dataBase *mongo.Database) *http.ServeMux {
 
 	userCol := controllers.NewUserCollection(dataBase.Collection("user"))
 
+	// health check handler
 	router.HandleFunc("GET /", healthCheck)
+
+	// user handlers
 	router.HandleFunc("POST /user/register", userCol.UserRegisterHandler)
-	router.HandleFunc("GET /users", userCol.ListAllUser)
+	router.HandleFunc("DELETE /user", userCol.DeleteUserHandler)
+	router.HandleFunc("GET /users", userCol.GetAllUserHandler)
 
 	return router
 }
