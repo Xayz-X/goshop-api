@@ -34,7 +34,7 @@
 // 	}
 // }
 
-package main
+package handler
 
 import (
 	"context"
@@ -68,6 +68,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Vercel expects a handler function, so we return it here
-func main() {
-	http.HandleFunc("/", Handler)
-}
+// func main() {
+// 	http.HandleFunc("/", Handler)
+// }
