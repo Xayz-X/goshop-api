@@ -112,7 +112,7 @@ func (u *UserCollection) GetAllUserHandler(w http.ResponseWriter, r *http.Reques
 		utils.WriterError(w, http.StatusInternalServerError, err)
 		return
 	}
-	utils.WriterJSON(w, http.StatusFound, &userList)
+	utils.WriterJSON(w, http.StatusOK, &userList)
 }
 
 func (u *UserCollection) UserRegisterHandler(w http.ResponseWriter, r *http.Request) {
