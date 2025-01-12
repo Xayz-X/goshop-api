@@ -1,4 +1,4 @@
-package handler
+package routes
 
 import (
 	"net/http"
@@ -13,7 +13,7 @@ func GetRoutes(dataBase *mongo.Database) *http.ServeMux {
 	userCol := controllers.NewUserCollection(dataBase.Collection("user"))
 
 	// health check handler
-	router.HandleFunc("GET /", Handler)
+	router.HandleFunc("GET /", healthCheck)
 
 	// user handlers
 	router.HandleFunc("POST /user/register", userCol.UserRegisterHandler)
@@ -23,7 +23,7 @@ func GetRoutes(dataBase *mongo.Database) *http.ServeMux {
 	return router
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
+func healthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Server is running..."))
 }

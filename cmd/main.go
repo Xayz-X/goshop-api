@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	handler "github.com/Xayz-X/goshop-api/api"
 	"github.com/Xayz-X/goshop-api/controllers"
+	"github.com/Xayz-X/goshop-api/routes"
 	"github.com/Xayz-X/goshop-api/services"
 )
 
@@ -20,8 +20,8 @@ func main() {
 	controllers.NewUserCollection(userCol)
 
 	// run the server on port -> 3030
-	server := services.NewAPIService(":3000")
-	router := handler.GetRoutes(database)
+	server := services.NewAPIService(":10000")
+	router := routes.GetRoutes(database)
 	err := server.Run(router)
 	if err != nil {
 		log.Fatal("server start failed", err)
